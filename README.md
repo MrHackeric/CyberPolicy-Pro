@@ -1,30 +1,16 @@
-# React + Vite
+### Problem Statement:
+Managing and maintaining compliance with data protection regulations is a complex and fragmented process for businesses. Staying updated on ever-changing regulations can be overwhelming, and existing tools often don't integrate well, making it difficult to get a full view of compliance status. Drafting and updating essential legal documents like NDAs and privacy policies is time-consuming and often requires extensive legal expertise. Additionally, identifying and addressing compliance risks in real-time is challenging, especially for small to medium-sized businesses that lack the necessary resources to manage compliance effectively.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Solution:
+CyberPolicy Pro offers a unified approach to compliance management, simplifying the process and making it more efficient for businesses of all sizes. It centralizes compliance tracking, audit management, and regulatory monitoring, while automating key tasks that traditionally require legal expertise and manual effort. The platform features the following modules:
 
-Currently, two official plugins are available:
+- **AI-Powered Regulatory Assistant**: Provides real-time, customized guidance based on a business’s industry, location, and size. Automatically updates businesses on regulatory changes.
+  
+- **Automated Document Drafting Module**: Simplifies the creation of legal documents like NDAs and privacy policies using customizable templates, reducing the need for legal expertise.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Compliance Risk Scoring Dashboard**: Evaluates and displays a dynamic compliance health score based on factors like data handling, security measures, and employee training, with actionable insights to mitigate risks.
 
-
-
-
-
-During the 30-day hackathon, we will build a Regulatory Compliance Management Platform designed to transform how businesses manage and maintain compliance with data protection regulations. This platform will act as a central hub for tracking regulatory requirements, conducting audits, and monitoring compliance status.
-
-Our solution will feature an AI-Powered Regulatory Assistant that delivers real-time, customized guidance based on a business’s industry, location, and size. This assistant will keep businesses updated on regulatory changes automatically, eliminating the need for manual monitoring and ensuring they stay compliant with minimal effort.
-
-We’ll also include an Automated Document Drafting module that simplifies the creation of legal documents like NDAs and privacy policies. By using customizable templates, this feature will make it easy for businesses to generate and update essential compliance documents quickly, reducing the need for extensive legal expertise.
-
-The platform will incorporate a Compliance Risk Scoring Dashboard that evaluates and displays compliance health through a dynamic score based on data handling practices, security measures, and employee training. It will offer actionable insights and recommendations to help businesses address risks and improve their compliance posture.
-
-Our Compliance Alerts and Updates system will also continuously monitor changes in data protection laws and provide timely alerts for necessary policy adjustments. This ensures businesses can swiftly adapt to new regulations, keeping their compliance up to date without manual intervention.
-
-By integrating these advanced features, our platform will offer a seamless and efficient approach to compliance management, addressing the complexities of regulatory requirements and making compliance easier for businesses of all sizes.
-
-
-The unique challenge we are trying to solve is the challenge of managing and maintaining compliance with data protection regulations, which can be fragmented and complex. Businesses often struggle with staying updated on changing regulations, as it can be overwhelming. Existing tools usually don’t work together well, making it hard to get a full view of compliance. Drafting and updating legal documents like NDAs, privacy policies, and terms and conditions is time-consuming and often requires legal expertise. Identifying and addressing compliance risks proactively can also be difficult without real-time insights. Small to medium-sized businesses often lack the resources to manage compliance effectively. Our platform aims to simplify these tasks by providing a unified solution that makes compliance management easier and more efficient.
+- **Compliance Alerts and Updates**: Continuously monitors regulatory changes and provides timely alerts for necessary policy adjustments, ensuring compliance stays up to date without manual intervention.
 
 
 # CyberPolicy Pro Backend Repository Structure
@@ -92,3 +78,76 @@ cyberpolicy-pro-backend/
 ├── README.md                            # Documentation for backend setup and instructions
 ├── package.json                         # Dependencies and scripts
 └── package-lock.json                    # Lockfile for exact dependency versions
+
+
+
+# CyberPolicy Pro Frontend Repository Structure
+
+```bash
+cyberpolicy-pro-frontend/
+│
+├── public/                                # Static assets
+│   ├── index.html                         # Main HTML template
+│   ├── favicon.ico                        # Favicon icon
+│   └── manifest.json                      # PWA manifest file (if needed)
+│
+├── src/
+│   ├── assets/                            # Static assets like images, fonts, etc.
+│   │   ├── images/                        # Image files (logos, icons, etc.)
+│   │   └── styles/                        # Global styles (CSS/Sass)
+│
+│   ├── components/                        # Reusable components
+│   │   ├── auth/                          # Authentication components (login, sign-up)
+│   │   │   ├── LoginForm.js
+│   │   │   ├── SignUpForm.js
+│   │   │   └── ForgotPassword.js
+│   │   ├── dashboard/                     # Components for the compliance dashboard
+│   │   │   ├── ComplianceScore.js         # Displays the compliance risk score
+│   │   │   └── RiskRecommendations.js     # Displays risk-related insights and recommendations
+│   │   ├── notifications/                 # Notification components (alerts, updates)
+│   │   │   └── NotificationList.js
+│   │   └── common/                        # Common reusable components (buttons, modals)
+│   │       ├── Button.js
+│   │       ├── Modal.js
+│   │       └── Loader.js
+│
+│   ├── layouts/                           # Layout components
+│   │   ├── AuthLayout.js                  # Layout for authentication pages
+│   │   └── MainLayout.js                  # Layout for the main dashboard
+│
+│   ├── pages/                             # Pages for routing
+│   │   ├── Auth/                          # Authentication pages (Login, Register)
+│   │   │   ├── LoginPage.js
+│   │   │   ├── SignUpPage.js
+│   │   │   └── ForgotPasswordPage.js
+│   │   ├── Dashboard/                     # Dashboard and related pages
+│   │   │   ├── ComplianceDashboard.js     # Main dashboard page
+│   │   │   └── RiskDashboard.js           # Compliance risk details page
+│   │   ├── Documents/                     # Pages related to document generation
+│   │   │   └── DocumentGeneratorPage.js   # Page for generating NDAs, privacy policies
+│   │   └── NotFoundPage.js                # 404 Page Not Found
+│
+│   ├── services/                          # API service calls and business logic
+│   │   ├── authService.js                 # Service for user authentication
+│   │   ├── complianceService.js           # API calls for compliance checks and updates
+│   │   ├── documentService.js             # API calls for document generation
+│   │   └── riskScoringService.js          # Service for risk score and insights
+│
+│   ├── store/                             # Redux store (if using Redux for state management)
+│   │   ├── actions/                       # Redux action creators
+│   │   ├── reducers/                      # Redux reducers for different features
+│   │   └── store.js                       # Main Redux store configuration
+│
+│   ├── utils/                             # Utility functions
+│   │   ├── api.js                         # Axios instance for API requests
+│   │   ├── authHelper.js                  # Helpers for authentication handling (tokens, etc.)
+│   │   └── validators.js                  # Form validation functions
+│
+│   ├── App.js                             # Main app component (sets up routes)
+│   ├── index.js                           # Entry point (ReactDOM render)
+│   └── App.css                            # Global app-wide styles
+│
+├── .env                                   # Environment variables (API keys, etc.)
+├── .gitignore                             # Git ignore file (e.g., node_modules, .env)
+├── package.json                           # Project dependencies and scripts
+└── package-lock.json                      # Lockfile for exact dependency versions
