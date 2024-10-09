@@ -27,7 +27,9 @@ By integrating these advanced features, our platform will offer a seamless and e
 The unique challenge we are trying to solve is the challenge of managing and maintaining compliance with data protection regulations, which can be fragmented and complex. Businesses often struggle with staying updated on changing regulations, as it can be overwhelming. Existing tools usually don’t work together well, making it hard to get a full view of compliance. Drafting and updating legal documents like NDAs, privacy policies, and terms and conditions is time-consuming and often requires legal expertise. Identifying and addressing compliance risks proactively can also be difficult without real-time insights. Small to medium-sized businesses often lack the resources to manage compliance effectively. Our platform aims to simplify these tasks by providing a unified solution that makes compliance management easier and more efficient.
 
 
+# CyberPolicy Pro Backend Repository Structure
 
+```bash
 cyberpolicy-pro-backend/
 │
 ├── src/
