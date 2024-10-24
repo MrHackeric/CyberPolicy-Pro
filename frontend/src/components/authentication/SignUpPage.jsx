@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaCamera, FaSpinner } from 'react-icons/fa'; // Icons for inputs
+import axios from "axios"
 
 const SignUpPage = () => {
   const [fullName, setFirstName] = useState('');
@@ -15,9 +16,27 @@ const SignUpPage = () => {
     setProfilePic(file);
   };
 
-  const handleSignUp = () => {
-    setIsLoading(true);
+  const handleSignUp = async () => {
+
     // Simulate sign up logic (replace with actual API call)
+    try {
+      setIsLoading(true);
+      const userData = {
+        fullName: fullName,
+        email: email,
+        phoneNUmber: phone,
+        role: role,
+        profilePicture: profilePic,
+        password: password,
+      }
+
+      const response = await axios.post('http://localhost:3000/api/user/register', userData)
+
+      console.log("User created succesfully", response.data)
+
+    } catch (error) {
+      console.log(error)
+    }
     setTimeout(() => {
       setIsLoading(false);
       console.log('Signed up with:', {

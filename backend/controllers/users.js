@@ -19,11 +19,19 @@ const CYBER_SECRET = process.env.CYBERPOLICY_PRO_SECRET;
 // @route   POST /api/users/register
 // @access  Public
 export const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { fullName, email, phoneNumber, profilePicture, role, password } =
+    req.body;
 
   try {
     //validate the inputs
-    if (!username && !email && !password) {
+    if (
+      !fullName &&
+      !email &&
+      !phoneNumber &&
+      !profilePicture &&
+      !role &&
+      !password
+    ) {
       return res.status(400).json({ msg: "Input the all required details" });
     }
     // Check if user already exists
@@ -41,14 +49,18 @@ export const registerUser = async (req, res) => {
 
     // Create new user
     const newUser = await createUser({
-      username,
+      fullName,
       email,
+      phoneNumber,
+      profilePicture,
+      role,
+      password,
       authentication: {
         salt,
         password: hashedPassword,
       },
     });
-
+    console.log("User created succesfully", newUser);
     res.status(200).json({ user: newUser }).end();
   } catch (err) {
     console.error(err.message);
@@ -118,18 +130,19 @@ export const logoutUser = async (req, res) => {
 // @route   GET /api/users/profile/:id
 // @access  Private
 
+
 // @desc    Update user profile
 // @route   PUT /api/users/update/:id
 // @access  Private
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { username } = req.body;
-    if (!username) {
+    const { fullName } = req.body;
+    if (!fullName) {
       res.status(400);
     }
     const user = await getUserById(id);
-    user.username = username;
+    user.fullName = fullName;
     await user.save();
 
     res.status(200).json({ msg: "User updated succcesfully.", user });

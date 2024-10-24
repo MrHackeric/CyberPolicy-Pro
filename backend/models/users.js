@@ -1,18 +1,24 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  phoneNumber: { type: String, required: true },
-  profilePicture: { type: String }, // URL to the profile picture
-  role: { type: String, enum: ['admin', 'user', 'superuser'], required: true }, // Role with options
-  authentication: {
-    password: { type: String, required: true, select: false },
-    salt: { type: String, select: false },
-    sessionToken: { type: String, select: false },
+const userSchema = new mongoose.Schema(
+  {
+    fullName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    phoneNumber: { type: String, required: true },
+    profilePicture: { type: String }, // URL to the profile picture
+    role: {
+      type: String,
+      enum: ["admin", "user", "superuser"],
+      required: true,
+    },
+    authentication: {
+      password: { type: String, required: true, select: false },
+      salt: { type: String, select: false },
+      sessionToken: { type: String, select: false },
+    },
   },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 export const UserModel = mongoose.model("users", userSchema);
 
