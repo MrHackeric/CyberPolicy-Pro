@@ -1,9 +1,13 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-async function generateComplianceGuidance(industry, location, businessSize) {
+export async function generateComplianceGuidance(
+  industry,
+  location,
+  businessSize
+) {
   try {
     // Initialize the model
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -24,5 +28,3 @@ async function generateComplianceGuidance(industry, location, businessSize) {
     throw error;
   }
 }
-
-module.exports = { generateComplianceGuidance };

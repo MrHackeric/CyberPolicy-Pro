@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // Placeholder for AI-generated document fetching
 const fetchAIDocument = async (documentType) => {
   // Simulate fetching AI-generated document content
-  const response = await fetch(`YOUR_API_ENDPOINT/${documentType}`);
+  const response = await fetch(`http://localhost:3000/api/${documentType}`);
   const data = await response.json();
   return data; // Assumes data contains the document content and metadata
 };

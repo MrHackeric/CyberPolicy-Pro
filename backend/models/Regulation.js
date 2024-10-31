@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const regulationSchema = new mongoose.Schema({
   industry: {
@@ -24,4 +24,4 @@ const regulationSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Regulation", regulationSchema);
+export const Regulation = mongoose.model("Regulation", regulationSchema);

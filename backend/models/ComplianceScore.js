@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const complianceScoreSchema = new mongoose.Schema({
   companyId: {
@@ -56,4 +56,7 @@ const complianceScoreSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("ComplianceScore", complianceScoreSchema);
+export const ComplianceScore = mongoose.model(
+  "ComplianceScore",
+  complianceScoreSchema
+);

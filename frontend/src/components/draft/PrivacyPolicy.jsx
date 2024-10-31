@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 const PrivacyPolicy = () => {
   const [companyName, setCompanyName] = useState('');
@@ -14,16 +15,22 @@ const PrivacyPolicy = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to generate document
-    const requestData = {
-      companyName,
-      dataCollected,
-      isConsentRequired
-    };
-    console.log(requestData);
-    // API call to generate the Privacy Policy using AI backend
+    try {
+      // Call API to generate document
+      const requestData = {
+        type: "privacy_policy",
+        companyName,
+        dataCollected,
+        isConsentRequired
+      };
+      console.log(requestData);
+      // API call to generate the Privacy Policy using AI backend
+      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData)
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (

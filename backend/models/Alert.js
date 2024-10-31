@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose  from "mongoose";
 
 const alertSchema = new mongoose.Schema({
   companyId: {
@@ -49,4 +49,4 @@ const alertSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Alert", alertSchema);
+export const Alert = mongoose.model("Alert", alertSchema);

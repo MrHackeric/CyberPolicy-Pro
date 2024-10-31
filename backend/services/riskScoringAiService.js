@@ -1,8 +1,8 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-async function analyzeRiskFactors(companyData) {
+export async function analyzeRiskFactors(companyData) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
   const prompt = `As a compliance risk expert, analyze the following company data and provide detailed risk factors and recommendations:
@@ -28,7 +28,7 @@ async function analyzeRiskFactors(companyData) {
   }
 }
 
-function calculateScores(assessmentData) {
+export function calculateScores(assessmentData) {
   // Calculate individual scores
   const dataHandlingScore = calculateDataHandlingScore(
     assessmentData.dataHandling
@@ -90,8 +90,3 @@ function calculateTrainingScore(training) {
 
   return Math.max(0, score);
 }
-
-module.exports = {
-  analyzeRiskFactors,
-  calculateScores,
-};

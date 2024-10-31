@@ -1,8 +1,8 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-async function generateComplianceAlert(data) {
+export async function generateComplianceAlert(data) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
   const prompt = `As a compliance expert, analyze the following regulatory change or compliance situation and provide a detailed alert:
@@ -90,5 +90,3 @@ function parseAlertResponse(aiResponse) {
 
   return alert;
 }
-
-module.exports = { generateComplianceAlert };

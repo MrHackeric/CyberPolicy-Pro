@@ -1,25 +1,42 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import { connectDBOnline } from "./config/database.js";
+import dotenv from "dotenv";
+import userRouters from "./routes/users.js";
+import regulatoryAssistant from "./routes/regulatoryAssistant.js";
+import documentDrafting from "./routes/documentDrafting.js";
+import riskScoring from "./routes/riskScoring.js";
+import complianceAlerts from "./routes/complianceAlerts.js";
+import { handleError } from "./utils/errorHandler.js";
+const PORT = process.env.PORT || 3000;
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+//Middlewares
+app.use(
+  cors({
+    credentials: true,
+  })
+);
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(handleError);
 
-// Routes
-app.use("/api/regulatory", require("./routes/regulatoryAssistant"));
-app.use("/api/documents", require("./routes/documentDrafting"));
-app.use("/api/risk-scoring", require("./routes/riskScoring"));
-app.use("/api/alerts", require("./routes/complianceAlerts"));
+//db
+connectDBOnline();
 
-const PORT = process.env.PORT || 3000;
+//routes
+app.use("/api/users", userRouters);
+app.use("/api/regulatory", regulatoryAssistant);
+app.use("/api/documents", documentDrafting);
+app.use("/api/risk-scoring", riskScoring);
+app.use("/api/alerts", complianceAlerts);
+
+//server listen
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`The server is running on http://localhost/${PORT}`);
 });

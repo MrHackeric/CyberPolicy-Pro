@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const Regulation = require("../models/Regulation");
-const { generateComplianceGuidance } = require("../services/aiService");
+import { Regulation } from "../models/Regulation.js";
+import { generateComplianceGuidance } from "../services/aiService.js";
 
 // Get combined guidance (stored + AI)
 router.get("/guidance", async (req, res) => {
@@ -83,4 +83,4 @@ router.get("/ai-guidance", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

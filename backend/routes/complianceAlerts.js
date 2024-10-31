@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const Alert = require("../models/Alert");
-const { generateComplianceAlert } = require("../services/alertAiService");
+import { Alert } from "../models/Alert.js";
+import { generateComplianceAlert } from "../services/alertAiService.js";
 
 // Create new alert
 router.post("/create", async (req, res) => {
@@ -129,4 +129,4 @@ router.delete("/:alertId", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

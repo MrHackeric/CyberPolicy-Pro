@@ -1,11 +1,11 @@
 // src/routes/riskScoring.js - Update the parsing logic
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const ComplianceScore = require("../models/ComplianceScore");
-const {
+import {ComplianceScore} from "../models/ComplianceScore.js";
+import {
   analyzeRiskFactors,
   calculateScores,
-} = require("../services/riskScoringAiService");
+} from "../services/riskScoringAiService.js";
 
 // Calculate and store risk score
 router.post("/calculate", async (req, res) => {
@@ -167,4 +167,4 @@ function determineSeverity(riskLine) {
   return "low";
 }
 
-module.exports = router;
+export default router
