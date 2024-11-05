@@ -1,21 +1,36 @@
 import React, { useState } from 'react';
 import { FaLock, FaEnvelope, FaSpinner } from 'react-icons/fa'; // Icons for email, password, and loading spinner
+import axios from "axios"
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
-  const handleLogin = () => {
-    setIsLoading(true);
-    // Simulate login logic (replace with actual API call)
+  const handleLogin = async () => {
+
+    try {
+      setIsLoading(true);
+      const userData = {
+        email: email,
+        password: password,
+      }
+      // Simulate login logic (replace with actual API call)
+      const response = await axios.post("http://localhost:3000/api/users/login", userData)
+    } catch (error) {
+      console.log(error)
+    }
     setTimeout(() => {
       setIsLoading(false);
-      console.log('Logged in with:', email, password);
+      console.log('Logged in successfully');
     }, 3000);
+    navigate("/draft");
   };
 
   return (

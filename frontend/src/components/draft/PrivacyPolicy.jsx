@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
-const PrivacyPolicy = () => {
+
+const PrivacyPolicy = ({ onDocumentGenerated }) => {
   const [companyName, setCompanyName] = useState('');
   const [dataCollected, setDataCollected] = useState([]);
   const [isConsentRequired, setIsConsentRequired] = useState(false);
+  const [error, setError] = useState(null);
+
 
   const handleCheckboxChange = (e) => {
     const value = e.target.value;
@@ -14,17 +18,33 @@ const PrivacyPolicy = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to generate document
-    const requestData = {
-      companyName,
-      dataCollected,
-      isConsentRequired
-    };
-    console.log(requestData);
-    // API call to generate the Privacy Policy using AI backend
+    try {
+      const requestData = {
+        type: "privacy_policy",
+        companyName,
+        industry: "Software Engineering",
+        dataCollected,
+        isConsentRequired
+      };
+
+      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData);
+      const documentId = response.data?.document?._id || response.data?._id || null;
+      onDocumentGenerated(documentId);
+      if (documentId) {
+        onDocumentGenerated(documentId);
+        console.log("Generated Document ID:", documentId);
+      } else {
+        console.log("Document ID not found in response:", response.data);
+        setError("Unexpected response structure. Document ID is missing.");
+      }
+    } catch (error) {
+      console.error("Error generating document:", error);
+      setError("An error occurred while generating the document. Please try again.");
+    }
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

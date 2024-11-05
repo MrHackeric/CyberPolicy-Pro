@@ -1,3 +1,7 @@
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+
+
 const inviteSchema = new Schema(
   {
     inviteId: { type: String, required: true, unique: true },
