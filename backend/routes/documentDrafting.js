@@ -2,23 +2,42 @@ import express from "express";
 const router = express.Router();
 import { Document } from "../models/Document.js";
 import { generateDocumentController } from "../controllers/documentDrafting.js";
-
+import mongoose from "mongoose";
 
 // Generate new document
 router.post("/generate", generateDocumentController);
 
-// Get document by ID`  
+// Get document by ID`
 router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  // Check if the provided ID is a valid MongoDB ObjectId
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid document ID format.",
+    });
+  }
+
   try {
-    const document = await Document.findById(req.params.id);
+    const document = await Document.findById(id);
     if (!document) {
-      return res.status(404).json({ message: "Document not found" });
+      return res.status(404).json({
+        error: true,
+        message: "Document not found",
+      });
     }
-    res.json(document);
+
+    res.status(200).json({
+      error: false,
+      data: document,
+      message: "Document retrieved successfully",
+    });
   } catch (error) {
     res.status(500).json({
+      error: true,
       message: "Error retrieving document",
-      error: error.message,
+      details: error.message,
     });
   }
 });

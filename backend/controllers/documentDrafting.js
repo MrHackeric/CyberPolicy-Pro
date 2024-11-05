@@ -71,7 +71,7 @@ export const generateDocumentController = async (req, res) => {
     // Step 7: Respond with success and document data
     res.status(201).json({
       message: "Document generated successfully",
-      document: content,
+      document: savedDocument,
     });
   } catch (error) {
     res.status(500).json({

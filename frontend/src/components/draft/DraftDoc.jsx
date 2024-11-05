@@ -9,6 +9,7 @@ import Header from '../header/Header';
 const DraftDocument = () => {
   const [selectedDocument, setSelectedDocument] = useState('');
   const [generatedDocumentId, setGeneratedDocumentId] = useState(null);
+  
 
   const documentComponents = {
     'Privacy Policy': <PrivacyPolicy onDocumentGenerated={setGeneratedDocumentId} />,

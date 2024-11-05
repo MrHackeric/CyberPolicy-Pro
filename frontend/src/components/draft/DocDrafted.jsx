@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
 
-const fetchAIDocument = async (documentId) => {
+const fetchAIDocument = async ({ documentId }) => {
   // Fetching the AI-generated document from the backend using the document ID
   const response = await axios.get(`http://localhost:3000/api/documents/${documentId}`);
   return response.data;
@@ -16,14 +16,16 @@ const DocDrafted = ({ documentId }) => {
   const [generatedDocument, setGeneratedDocument] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
     if (documentId) {
       const getDocument = async () => {
         setLoading(true);
         try {
           const response = await axios.get(`http://localhost:3000/api/documents/${documentId}`);
-          setGeneratedDocument(response.data);
-          console.log("Here is the drafted data:", response.data)
+          setGeneratedDocument(response.data.document);
+          console.log("DocumentID is:", response.data._id)
+          console.log("Here is the drafted data:", response.data.content)
         } catch (error) {
           console.error("Error fetching AI document:", error);
         } finally {

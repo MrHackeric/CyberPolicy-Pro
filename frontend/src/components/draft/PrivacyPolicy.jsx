@@ -6,6 +6,7 @@ const PrivacyPolicy = ({ onDocumentGenerated }) => {
   const [companyName, setCompanyName] = useState('');
   const [dataCollected, setDataCollected] = useState([]);
   const [isConsentRequired, setIsConsentRequired] = useState(false);
+  const [error, setError] = useState(null);
 
 
   const handleCheckboxChange = (e) => {
@@ -29,11 +30,18 @@ const PrivacyPolicy = ({ onDocumentGenerated }) => {
       };
 
       const response = await axios.post("http://localhost:3000/api/documents/generate", requestData);
-      const documentId = response.data.document._id;
+      const documentId = response.data?.document?._id || response.data?._id || null;
       onDocumentGenerated(documentId);
-      console.log(response.data)
+      if (documentId) {
+        onDocumentGenerated(documentId);
+        console.log("Generated Document ID:", documentId);
+      } else {
+        console.log("Document ID not found in response:", response.data);
+        setError("Unexpected response structure. Document ID is missing.");
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error generating document:", error);
+      setError("An error occurred while generating the document. Please try again.");
     }
   };
 
