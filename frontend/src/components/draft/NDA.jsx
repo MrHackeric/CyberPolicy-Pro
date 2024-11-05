@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 const NDA = () => {
   const [disclosingParty, setDisclosingParty] = useState('');
   const [receivingParty, setReceivingParty] = useState('');
   const [agreementDuration, setAgreementDuration] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Call API to generate NDA
-    const requestData = {
-      disclosingParty,
-      receivingParty,
-      agreementDuration,
-    };
-    console.log(requestData);
+
     // API call to generate the NDA using AI backend
+    try {
+      // Call API to generate NDA
+      const requestData = {
+        type: "nda",
+        disclosingParty,
+        receivingParty,
+        agreementDuration,
+      };
+      console.log(requestData);
+      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData)
+      // return response.data.document;
+      console.log(response.data);
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   return (

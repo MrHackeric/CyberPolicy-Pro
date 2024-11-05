@@ -2,14 +2,14 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { connectDBOnline } from "./config/database.js";
+import { connectDBOnline, connectDBLocal } from "./config/database.js";
 import dotenv from "dotenv";
 import userRouters from "./routes/users.js";
 import regulatoryAssistant from "./routes/regulatoryAssistant.js";
 import documentDrafting from "./routes/documentDrafting.js";
 import riskScoring from "./routes/riskScoring.js";
 import complianceAlerts from "./routes/complianceAlerts.js";
-import { handleError } from "./utils/errorHandler.js";
+//import { handleError1 } from "./utils/errorHandler.js";
 const PORT = process.env.PORT || 3000;
 
 dotenv.config();
@@ -24,10 +24,11 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(handleError);
+//app.use(handleError1());
 
 //db
 connectDBOnline();
+// connectDBLocal();
 
 //routes
 app.use("/api/users", userRouters);

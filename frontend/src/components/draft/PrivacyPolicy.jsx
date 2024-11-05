@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from "axios";
 
-const PrivacyPolicy = () => {
+
+const PrivacyPolicy = ({ onDocumentGenerated }) => {
   const [companyName, setCompanyName] = useState('');
   const [dataCollected, setDataCollected] = useState([]);
   const [isConsentRequired, setIsConsentRequired] = useState(false);
+
 
   const handleCheckboxChange = (e) => {
     const value = e.target.value;
@@ -18,20 +20,23 @@ const PrivacyPolicy = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Call API to generate document
       const requestData = {
         type: "privacy_policy",
         companyName,
+        industry: "Software Engineering",
         dataCollected,
         isConsentRequired
       };
-      console.log(requestData);
-      // API call to generate the Privacy Policy using AI backend
-      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData)
+
+      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData);
+      const documentId = response.data.document._id;
+      onDocumentGenerated(documentId);
+      console.log(response.data)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

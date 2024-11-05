@@ -3,10 +3,11 @@ const router = express.Router();
 import { Document } from "../models/Document.js";
 import { generateDocumentController } from "../controllers/documentDrafting.js";
 
+
 // Generate new document
 router.post("/generate", generateDocumentController);
 
-// Get document by ID
+// Get document by ID`  
 router.get("/:id", async (req, res) => {
   try {
     const document = await Document.findById(req.params.id);

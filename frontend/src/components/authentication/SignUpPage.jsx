@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaUser, FaEnvelope, FaLock, FaPhone, FaCamera, FaSpinner } from 'react-icons/fa'; // Icons for inputs
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const SignUpPage = () => {
   const [fullName, setFirstName] = useState('');
@@ -10,6 +11,7 @@ const SignUpPage = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [agreedToPrivacyPolicy, setAgreedToPrivacyPolicy] = useState(false); // New state for checkbox
+  const navigate = useNavigate()
 
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
@@ -25,7 +27,7 @@ const SignUpPage = () => {
         fullName: fullName,
         email: email,
         phoneNUmber: phone,
-        role: role,
+        role: role || "user",
         profilePicture: profilePic,
         password: password,
       }
@@ -39,10 +41,9 @@ const SignUpPage = () => {
     }
     setTimeout(() => {
       setIsLoading(false);
-      console.log('Signed up with:', {
-        fullName, email, password, phone, profilePic,
-      });
+
     }, 3000);
+    navigate('/login')
   };
 
   return (
