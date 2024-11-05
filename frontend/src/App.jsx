@@ -20,7 +20,7 @@ import RiskScore from '../src/components/riskscore/RiskScore';
 import Draft from '../src/components/draft/Draft';
 import ProfileSettings from '../src/components/profilesettings/ProfileSettings';
 import Notifications from '../src/components/notifications/Notifications';
-import DocDrafted from '../src/components/draft/DocDrafted';
+
 
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
         <Route exact path="/draft" element={<Draft />} />
         <Route exact path="/settings" element={<ProfileSettings />} />
         <Route exact path="/notifications" element={<Notifications />} />
-        <Route exact path="/docdrafted/:documentId" element={<DocDrafted />} />
+
       </Routes>
     </>
   );

@@ -32,6 +32,7 @@ const PrivacyPolicy = ({ onDocumentGenerated }) => {
       const response = await axios.post("http://localhost:3000/api/documents/generate", requestData);
       const documentId = response.data?.document?._id || response.data?._id || null;
       onDocumentGenerated(documentId);
+      
       if (documentId) {
         onDocumentGenerated(documentId);
         console.log("Generated Document ID:", documentId);

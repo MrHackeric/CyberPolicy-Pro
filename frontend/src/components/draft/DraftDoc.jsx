@@ -3,23 +3,23 @@ import PrivacyPolicy from './PrivacyPolicy';
 import NDA from './NDA';
 import EmploymentContract from './EmploymentContract';
 import CompanyPolicy from './CompanyPolicy';
-
+import DocDrafted from './DocDrafted'; // Import DocDrafted component
 import Header from '../header/Header';
 
 const DraftDocument = () => {
   const [selectedDocument, setSelectedDocument] = useState('');
-  const [generatedDocumentId, setGeneratedDocumentId] = useState(null);
-  
+  const [documentId, setDocumentId] = useState(null);
 
   const documentComponents = {
-    'Privacy Policy': <PrivacyPolicy onDocumentGenerated={setGeneratedDocumentId} />,
-    'NDA': <NDA onDocumentGenerated={setGeneratedDocumentId} />,
-    'Employment Contract': <EmploymentContract onDocumentGenerated={setGeneratedDocumentId} />,
-    'Company Policy': <CompanyPolicy onDocumentGenerated={setGeneratedDocumentId} />
+    'Privacy Policy': <PrivacyPolicy onDocumentGenerated={setDocumentId} />,
+    'NDA': <NDA onDocumentGenerated={setDocumentId} />,
+    'Employment Contract': <EmploymentContract onDocumentGenerated={setDocumentId} />,
+    'Company Policy': <CompanyPolicy onDocumentGenerated={setDocumentId} />
   };
 
   const handleDocumentChange = (e) => {
     setSelectedDocument(e.target.value);
+    setDocumentId(null); // Reset documentId when changing document type
   };
 
   return (
@@ -42,15 +42,15 @@ const DraftDocument = () => {
               <option value="NDA">Non-Disclosure Agreement</option>
               <option value="Employment Contract">Employment Contract</option>
               <option value="Company Policy">Company Policy</option>
-
-
             </select>
           </div>
 
-          {/* Render the selected document form */}
+          {/* Render the selected document form or the drafted document */}
           <div className="mt-6">
-            {selectedDocument ? (
+            {selectedDocument && !documentId ? (
               <div>{documentComponents[selectedDocument]}</div>
+            ) : documentId ? (
+              <DocDrafted documentId={documentId} /> // Pass documentId to DocDrafted
             ) : (
               <div className="text-gray-500 text-lg">Please select a document to draft</div>
             )}

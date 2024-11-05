@@ -1,33 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
-
-const fetchAIDocument = async ({ documentId }) => {
-  // Fetching the AI-generated document from the backend using the document ID
+const fetchAIDocument = async (documentId) => {
   const response = await axios.get(`http://localhost:3000/api/documents/${documentId}`);
+  console.log("Full API Response:", response); // Log the entire response
   return response.data;
 };
 
 const DocDrafted = ({ documentId }) => {
-  // const { documentId } = useParams(); // Get the document ID from the URL
-  // const [generatedDocument, setGeneratedDocument] = useState(null);
-  // const [loading, setLoading] = useState(true); // Start loading as true to show loading state on initial render
-  const [error, setError] = useState(null); // Track any error messages
+  const [error, setError] = useState(null);
   const [generatedDocument, setGeneratedDocument] = useState(null);
   const [loading, setLoading] = useState(false);
-
 
   useEffect(() => {
     if (documentId) {
       const getDocument = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3000/api/documents/${documentId}`);
-          setGeneratedDocument(response.data.document);
-          console.log("DocumentID is:", response.data._id)
-          console.log("Here is the drafted data:", response.data.content)
+          const document = await fetchAIDocument(documentId); // Fetch the entire data object
+          setGeneratedDocument(document.data); // Adjust this based on the logged structure
+          console.log("Fetched Document:", document.data);
         } catch (error) {
           console.error("Error fetching AI document:", error);
+          setError("Error fetching AI document");
         } finally {
           setLoading(false);
         }
@@ -35,6 +30,7 @@ const DocDrafted = ({ documentId }) => {
       getDocument();
     }
   }, [documentId]);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 p-8">
@@ -50,8 +46,21 @@ const DocDrafted = ({ documentId }) => {
               <div>
                 <h2 className="text-xl font-bold">Generated Document</h2>
                 <div className="mt-4 p-4 bg-gray-100 rounded">
-                  <h3 className="font-semibold">{generatedDocument.title}</h3>
-                  <p>{generatedDocument.content}</p>
+                  <p><strong>Type:</strong> {generatedDocument.type}</p>
+                  <p><strong>Company Name:</strong> {generatedDocument.companyName}</p>
+                  <p><strong>Industry:</strong> {generatedDocument.industry}</p>
+                  <p><strong>Content:</strong> {generatedDocument.content}</p>
+                  <p><strong>Version:</strong> {generatedDocument.metadata?.version}</p>
+                  {generatedDocument.metadata?.customFields && (
+                    <div>
+                      <p><strong>Custom Fields:</strong></p>
+                      <ul>
+                        {Object.entries(generatedDocument.metadata.customFields).map(([key, value]) => (
+                          <li key={key}>{key}: {value}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
                 {generatedDocument.downloadLink && (
                   <a
