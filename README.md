@@ -1,5 +1,7 @@
 # **CyberPolicy Pro**
 
+<img src="./frontend/src/images/dashboard.png">
+
 ## **Overview**
 
 **CyberPolicy Pro** is a Regulatory Compliance Management Platform that simplifies compliance tracking and document management for businesses of all sizes. Acting as a central hub, CyberPolicy Pro enables users to track regulatory requirements, conduct audits, generate essential legal documents, and receive compliance alerts.
