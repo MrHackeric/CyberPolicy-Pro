@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import axios from "axios"
 
-const CompanyPolicy = () => {
+const CompanyPolicy = ({ onDocumentGenerated }) => {
   const [policyName, setPolicyName] = useState('');
   const [policyDescription, setPolicyDescription] = useState('');
   const [policyPurpose, setPolicyPurpose] = useState('');
@@ -11,10 +12,15 @@ const CompanyPolicy = () => {
   const [consequences, setConsequences] = useState('');
   const [policyOwner, setPolicyOwner] = useState('');
   const [approvalStatus, setApprovalStatus] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try{
     const policyData = {
+      type: "company_policy",
+      companyName: policyOwner, // Use the correct field names
+      industry: "Software Engeneering" ,
       policyName,
       policyDescription,
       policyPurpose,
@@ -29,6 +35,22 @@ const CompanyPolicy = () => {
 
     console.log('Company Policy Data:', policyData);
     // Here you would typically send this data to your API for processing
+
+  const response = await axios.post("http://localhost:3000/api/documents/generate", policyData);
+      const documentId = response.data?.document?._id || response.data?._id || null;
+      onDocumentGenerated(documentId);
+      
+      if (documentId) {
+        onDocumentGenerated(documentId);
+        console.log("Generated Document ID:", documentId);
+      } else {
+        console.log("Document ID not found in response:", response.data);
+        setError("Unexpected response structure. Document ID is missing.");
+      }
+    } catch (error) {
+      console.error("Error generating document:", error);
+      setError("An error occurred while generating the document. Please try again.");
+    }
   };
 
   return (

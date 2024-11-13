@@ -9,7 +9,7 @@ import regulatoryAssistant from "./routes/regulatoryAssistant.js";
 import documentDrafting from "./routes/documentDrafting.js";
 import riskScoring from "./routes/riskScoring.js";
 import complianceAlerts from "./routes/complianceAlerts.js";
-//import { handleError1 } from "./utils/errorHandler.js";
+import { ErrorHandler, handleError, handleError1 } from "./utils/errorHandler.js";
 const PORT = process.env.PORT || 3000;
 
 dotenv.config();
@@ -24,11 +24,12 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cookieParser());
-//app.use(handleError1());
+app.use(handleError1)
+
 
 //db
-//connectDBOnline();
- connectDBLocal();
+connectDBOnline();
+//  connectDBLocal();
 
 //routes
 app.use("/api/users", userRouters);

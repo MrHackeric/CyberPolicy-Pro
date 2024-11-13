@@ -7,8 +7,8 @@ const documentSchema = new mongoose.Schema({
     enum: [
       "nda",
       "privacy_policy",
-      "terms_of_service",
-      "data_processing_agreement",
+      "employment_contract",
+      "company_policy",
     ],
   },
   companyName: {

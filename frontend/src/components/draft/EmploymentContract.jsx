@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
-const EmploymentContract = () => {
+import axios from "axios"
+const EmploymentContract = ({ onDocumentGenerated }) => {
   const [employerName, setEmployerName] = useState('');
   const [employeeName, setEmployeeName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
@@ -12,10 +12,15 @@ const EmploymentContract = () => {
   const [location, setLocation] = useState('');
   const [confidentiality, setConfidentiality] = useState(false);
   const [termination, setTermination] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit =  async (e) => {
     e.preventDefault();
+    try{
     const contractData = {
+      type: "employment_contract",
+      companyName: employerName, // Use the correct field names
+      industry: "Software Engeneering" ,
       employerName,
       employeeName,
       jobTitle,
@@ -31,7 +36,22 @@ const EmploymentContract = () => {
 
     console.log('Employment Contract Data:', contractData);
     // Here you would typically send this data to your API for processing
-  };
+    const response = await axios.post("http://localhost:3000/api/documents/generate", contractData);
+    const documentId = response.data?.document?._id || response.data?._id || null;
+    onDocumentGenerated(documentId);
+    
+    if (documentId) {
+      onDocumentGenerated(documentId);
+      console.log("Generated Document ID:", documentId);
+    } else {
+      console.log("Document ID not found in response:", response.data);
+      setError("Unexpected response structure. Document ID is missing.");
+    }
+  } catch (error) {
+    console.error("Error generating document:", error);
+    setError("An error occurred while generating the document. Please try again.");
+  }
+};
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

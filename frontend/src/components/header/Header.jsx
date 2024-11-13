@@ -3,15 +3,11 @@ import { AiOutlineFileText, AiOutlineBell, AiOutlineSetting } from 'react-icons/
 import { FaFileAlt } from 'react-icons/fa'; // Icon for Risk Score
 import { Link } from 'react-router-dom'; // For linking to different pages
 import LogoutIcon from '@mui/icons-material/Logout'; // Importing Material UI Logout Icon
-import { useNavigate } from 'react-router-dom'
-import axios from "axios"
-
-
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Header = () => {
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -29,14 +25,15 @@ const Header = () => {
       console.error("Logout failed", error);
     }
   };
+
   return (
     <header className="bg-blue-600 shadow-lg py-4">
-      <div className="container mx-auto flex justify-between items-center px-4">
+      <div className="container mx-auto flex flex-wrap justify-between items-center px-4">
         {/* Logo or Title */}
         <div className="text-3xl font-bold text-white">CyberPolicy Pro</div>
 
-        {/* Navigation Icons */}
-        <nav className="flex space-x-10">
+        {/* Responsive Navigation Icons */}
+        <nav className="flex flex-wrap items-center justify-center space-x-10 mt-4 md:mt-0">
           {/* Draft Document */}
           <Link to="/draft" className="flex flex-col items-center text-white hover:text-blue-300 transition duration-300 ease-in-out">
             <AiOutlineFileText size={28} />
@@ -62,7 +59,7 @@ const Header = () => {
           </Link>
 
           {/* Logout */}
-          <Link to="" className="flex flex-col items-center text-white hover:text-blue-300 transition duration-300 ease-in-out" onClick={handleLogout}>
+          <Link to="#" className="flex flex-col items-center text-white hover:text-blue-300 transition duration-300 ease-in-out" onClick={handleLogout}>
             <LogoutIcon fontSize="large" />
             <span className="text-sm mt-1">Logout</span>
           </Link>

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios";
 
-const NDA = () => {
+const NDA = ({ onDocumentGenerated }) => {
   const [disclosingParty, setDisclosingParty] = useState('');
   const [receivingParty, setReceivingParty] = useState('');
   const [agreementDuration, setAgreementDuration] = useState('');
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,18 +15,27 @@ const NDA = () => {
       // Call API to generate NDA
       const requestData = {
         type: "nda",
-        disclosingParty,
-        receivingParty,
-        agreementDuration,
+        companyName: disclosingParty, // Use the correct field names
+        industry: "Software Engeneering" ,
+        receivingParty: receivingParty,     // Use the correct field names
+        duration: agreementDuration,    // This is the duration field
+        // Add other fields if necessary
       };
-      console.log(requestData);
-      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData)
-      // return response.data.document;
-      console.log(response.data);
+      const response = await axios.post("http://localhost:3000/api/documents/generate", requestData);
+      const documentId = response.data?.document?._id || response.data?._id || null;
+      onDocumentGenerated(documentId);
+      
+      if (documentId) {
+        onDocumentGenerated(documentId);
+        console.log("Generated Document ID:", documentId);
+      } else {
+        console.log("Document ID not found in response:", response.data);
+        setError("Unexpected response structure. Document ID is missing.");
+      }
     } catch (error) {
-      console.log(error)
+      console.error("Error generating document:", error);
+      setError("An error occurred while generating the document. Please try again.");
     }
-
   };
 
   return (

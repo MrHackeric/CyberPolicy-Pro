@@ -5,6 +5,12 @@ import { handleError } from "../utils/errorHandler.js";
 export const generateDocumentController = async (req, res) => {
   //log the incoming body
   console.log("Received data:", req.body);
+  // Received data: {
+  //   type: 'nda',
+  //   disclosingParty: 'MAster CHief',
+  //   receivingParty: 'Finesy ENt',
+  //   agreementDuration: '5'
+  // }
 
   //restructure the body
   try {
